@@ -1,10 +1,20 @@
-import adapter from '@sveltejs/adapter-auto';
+// svelte.config.js
+import sveltePreprocess from 'svelte-preprocess';
+import adapter from '@sveltejs/adapter-static';
 
-/** @type {import('@sveltejs/kit').Config} */
-const config = {
+export default {
+	preprocess: sveltePreprocess( { sourceMap: false } ),
 	kit: {
-		adapter: adapter()
-	}
-};
+		adapter: adapter( {
+			pages: 'build',
+			assets: 'build',
+			precompress: true
+		} ),
+		paths: {
+			base: "",
+			assets: ""
+		},
 
-export default config;
+		prerender: { default: true }
+	}
+}
