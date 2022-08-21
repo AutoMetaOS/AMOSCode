@@ -161,7 +161,6 @@
           on:dragleave={dragLeave}
           on:drop={dragEnd}
         >
-          <i class="drag-handle" />
           {#if component.name === "App" && component !== editing}
             <div class="uneditable">App.svelte</div>
           {:else if component === editing}
@@ -239,14 +238,14 @@
     border-bottom: 3px solid transparent;
     padding: 12px 14px 8px 16px;
     margin: 0;
-    color: #aaa;
+    color: #ccc;
     border-radius: 0;
     cursor: pointer;
   }
 
   .file-tabs .button.active {
     /* color: var(--second); */
-    color: #333;
+    color: #fff;
     border-bottom: 3px solid var(--prime);
   }
 
@@ -323,27 +322,6 @@
 
   .add-new:hover {
     color: var(--flash) !important;
-  }
-
-  .drag-handle {
-    cursor: move;
-    width: 5px;
-    height: 25px;
-    position: absolute;
-    left: 5px;
-    top: 9px;
-    --drag-handle-color: #dedede;
-    background: linear-gradient(
-      to right,
-      var(--drag-handle-color) 1px,
-      white 1px,
-      white 2px,
-      var(--drag-handle-color) 2px,
-      var(--drag-handle-color) 3px,
-      white 3px,
-      white 4px,
-      var(--drag-handle-color) 4px
-    );
   }
 
   svg {

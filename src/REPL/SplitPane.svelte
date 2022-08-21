@@ -135,7 +135,8 @@
   .container {
     position: relative;
     width: 100%;
-    height: calc(100% - 23px);
+    /* height: calc(100% - 23px); */
+    height: 100%;
   }
 
   .pane {

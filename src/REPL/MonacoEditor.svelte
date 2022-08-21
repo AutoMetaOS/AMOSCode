@@ -47,6 +47,8 @@
       model: null,
       tabSize: 2,
       scrollBeyondLastLine: false,
+      fontLigatures: true,
+      fontFamily: "Fira Code,",
       fontSize: 16,
       theme: "vs-dark",
       wordWrapColumn: mode ? 40 : 80,
