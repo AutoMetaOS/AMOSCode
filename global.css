@@ -47,8 +47,10 @@
   --heading: var(--second);
   --text: #444;
   --sidebar-text: rgba(255, 255, 255, 0.75);
-  --border-w: 0.3rem; /* border-width  */
-  --border-r: 0.4rem; /* border-radius */
+  --border-w: 0.3rem;
+  /* border-width  */
+  --border-r: 0.4rem;
+  /* border-radius */
 }
 
 /*	typo vars */
@@ -57,19 +59,22 @@
   --code-fs: 1.3rem;
   --h6: 1.4rem;
   --h5: 1.6rem;
-  --h4: 1.8rem; /* default font-size */
+  --h4: 1.8rem;
+  /* default font-size */
   --h3: 2.6rem;
   --h2: 3rem;
   --h1: 3.2rem;
-  --linemax: 42em; /* max line-length */
-  --lh: 1.5; /* base line-height */
+  --linemax: 42em;
+  /* max line-length */
+  --lh: 1.5;
+  /* base line-height */
 }
 
 body {
   --font: "Overpass", sans-serif;
   --font-mono: "Fira Mono", monospace;
   --font-ui: var(--font-mono);
-  --font-title: "FrederickatheGreat-Regular", "Overpass", sans-serif;
+  --font-title: "Overpass", sans-serif;
   --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
@@ -103,16 +108,6 @@ body {
   font-display: fallback;
   src: local("Fira Mono Regular "), local("Fira Mono-Regular"),
     url("fonts/fira-mono/fira-mono-latin-400.woff2") format("woff2");
-}
-
-/* FrederickatheGreat-Regular */
-@font-face {
-  font-family: "FrederickatheGreat-Regular";
-  src: local("FrederickatheGreat-Regular"),
-    url("fonts/Fredericka_the_Great/FrederickatheGreat-Regular.woff2")
-      format("woff2"); /* Modern Browsers */
-  font-weight: normal;
-  font-style: normal;
 }
 
 /*	base reset ----------------------------- */
@@ -149,6 +144,7 @@ a:hover,
 a:active {
   color: var(--flash);
 }
+
 a:focus {
   outline: none;
 }
@@ -185,18 +181,23 @@ blockquote {
 h6 {
   font-size: var(--h6);
 }
+
 h5 {
   font-size: var(--h5);
 }
+
 h4 {
   font-size: var(--h4);
 }
+
 h3 {
   font-size: var(--h3);
 }
+
 h2 {
   font-size: var(--h2);
 }
+
 h1 {
   font-size: var(--h1);
 }
@@ -256,7 +257,7 @@ pre code {
 
 /*	opinionated styles --------------------- */
 
-li:not(.white) > h2 {
+li:not(.white)>h2 {
   color: var(--second);
 }
 
@@ -299,8 +300,8 @@ button[disabled],
   pointer-events: none;
 }
 
-button > svg,
-.btn > svg {
+button>svg,
+.btn>svg {
   position: relative;
   top: -0.1rem;
   width: 2rem !important;
@@ -314,11 +315,9 @@ button > svg,
   --btn-outline: 0.2rem;
   --btn-font: var(--font);
   --btn-calc-h: calc(var(--btn-h) - var(--btn-outline) * 2);
-  --btn-hover: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.07),
-    rgba(0, 0, 0, 0.07)
-  );
+  --btn-hover: linear-gradient(to top,
+      rgba(0, 0, 0, 0.07),
+      rgba(0, 0, 0, 0.07));
 
   position: relative;
   margin: 0 0.8rem 0.8rem 0;
@@ -390,14 +389,14 @@ a.no-underline {
   margin-left: var(--list-padding);
 }
 
-.listify ol > li,
-.listify ul > li {
+.listify ol>li,
+.listify ul>li {
   max-width: calc(var(--linemax) - var(--list-padding));
   line-height: 1.5;
   margin: 0 0 0.4rem 0;
 }
 
-.listify ul > li:before {
+.listify ul>li:before {
   content: "";
   position: absolute;
   margin-top: 1.1rem;
@@ -444,18 +443,20 @@ table span {
   align-items: stretch;
 }
 
-.grid > .cols-2,
-.grid > .cols-3 {
+.grid>.cols-2,
+.grid>.cols-3 {
   grid-column: span 1;
 }
 
 @media screen and (min-width: 840px) {
+
   .grid.half,
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .grid > .cols-2,
-  .grid > .cols-3 {
+
+  .grid>.cols-2,
+  .grid>.cols-3 {
     grid-column: span 2;
   }
 }
@@ -464,10 +465,12 @@ table span {
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  .grid > .cols-2 {
+
+  .grid>.cols-2 {
     grid-column: span 2;
   }
-  .grid > .cols-3 {
+
+  .grid>.cols-3 {
     grid-column: span 3;
   }
 }
@@ -506,15 +509,19 @@ figcaption,
 .prime {
   color: var(--prime) !important;
 }
+
 .second {
   color: var(--second) !important;
 }
+
 .flash {
   color: var(--flash) !important;
 }
+
 .black {
   color: black !important;
 }
+
 .white {
   color: white !important;
 }
@@ -522,15 +529,19 @@ figcaption,
 .back {
   background-color: var(--back) !important;
 }
+
 .back-light {
   background-color: var(--back-light) !important;
 }
+
 .bg-prime {
   background-color: var(--prime) !important;
 }
+
 .bg-second {
   background-color: var(--second) !important;
 }
+
 .bg-flash {
   background-color: var(--flash) !important;
 }
