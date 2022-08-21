@@ -3,13 +3,8 @@
 
   export let handle_select;
 
-  const {
-    components,
-    selected,
-    request_focus,
-    handle_delete,
-    rebundle,
-  } = getContext("REPL");
+  const { components, selected, request_focus, handle_delete, rebundle } =
+    getContext("REPL");
 
   let editing = null;
 
@@ -147,6 +142,76 @@
   }
 </script>
 
+<div class="component-selector">
+  {#if $components.length}
+    <div class="file-tabs" on:dblclick={addNew}>
+      {#each $components as component, index}
+        <div
+          id={component.name}
+          class="button"
+          role="button"
+          class:active={component === $selected}
+          class:draggable={component !== editing && index !== 0}
+          class:drag-over={over === component.name}
+          on:click={() => selectComponent(component)}
+          on:dblclick={(e) => e.stopPropagation()}
+          draggable={component !== editing}
+          on:dragstart={dragStart}
+          on:dragover={dragOver}
+          on:dragleave={dragLeave}
+          on:drop={dragEnd}
+        >
+          <i class="drag-handle" />
+          {#if component.name === "App" && component !== editing}
+            <div class="uneditable">App.svelte</div>
+          {:else if component === editing}
+            <span class="input-sizer">
+              {editing.name +
+                (/\./.test(editing.name) ? "" : `.${editing.type}`)}
+            </span>
+
+            <!-- svelte-ignore a11y-autofocus -->
+            <input
+              autofocus
+              spellcheck={false}
+              bind:value={editing.name}
+              on:focus={selectInput}
+              on:blur={closeEdit}
+              on:keydown={(e) =>
+                e.which === 13 &&
+                !isComponentNameUsed(editing) &&
+                e.target.blur()}
+              class:duplicate={isComponentNameUsed(editing)}
+            />
+          {:else}
+            <div
+              class="editable"
+              title="edit component name"
+              on:click={() => editTab(component)}
+            >
+              {component.name}.{component.type}
+            </div>
+
+            <span class="remove" on:click={() => remove(component)}>
+              <svg width="12" height="12" viewBox="0 0 24 24">
+                <line stroke="#999" x1="18" y1="6" x2="6" y2="18" />
+                <line stroke="#999" x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </span>
+          {/if}
+        </div>
+      {/each}
+
+      <button class="add-new" on:click={addNew} title="add new component">
+        <svg width="12" height="12" viewBox="0 0 24 24">
+          <line stroke="#999" x1="12" y1="5" x2="12" y2="19" />
+          <line stroke="#999" x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+      </button>
+    </div>
+  {/if}
+</div>
+
 <style>
   .component-selector {
     position: relative;
@@ -155,6 +220,7 @@
   }
 
   .file-tabs {
+    background: #222;
     border: none;
     margin: 0;
     white-space: nowrap;
@@ -168,12 +234,12 @@
     position: relative;
     display: inline-block;
     font: 400 12px/1.5 var(--font);
-    background: white;
+    background: #222;
     border: none;
     border-bottom: 3px solid transparent;
     padding: 12px 14px 8px 16px;
     margin: 0;
-    color: #999;
+    color: #aaa;
     border-radius: 0;
     cursor: pointer;
   }
@@ -296,66 +362,3 @@
     fill: none;
   }
 </style>
-
-<div class="component-selector">
-  {#if $components.length}
-    <div class="file-tabs" on:dblclick={addNew}>
-      {#each $components as component, index}
-        <div
-          id={component.name}
-          class="button"
-          role="button"
-          class:active={component === $selected}
-          class:draggable={component !== editing && index !== 0}
-          class:drag-over={over === component.name}
-          on:click={() => selectComponent(component)}
-          on:dblclick={(e) => e.stopPropagation()}
-          draggable={component !== editing}
-          on:dragstart={dragStart}
-          on:dragover={dragOver}
-          on:dragleave={dragLeave}
-          on:drop={dragEnd}>
-          <i class="drag-handle" />
-          {#if component.name === 'App' && component !== editing}
-            <div class="uneditable">App.svelte</div>
-          {:else if component === editing}
-            <span class="input-sizer">
-              {editing.name + (/\./.test(editing.name) ? '' : `.${editing.type}`)}
-            </span>
-
-            <!-- svelte-ignore a11y-autofocus -->
-            <input
-              autofocus
-              spellcheck={false}
-              bind:value={editing.name}
-              on:focus={selectInput}
-              on:blur={closeEdit}
-              on:keydown={(e) => e.which === 13 && !isComponentNameUsed(editing) && e.target.blur()}
-              class:duplicate={isComponentNameUsed(editing)} />
-          {:else}
-            <div
-              class="editable"
-              title="edit component name"
-              on:click={() => editTab(component)}>
-              {component.name}.{component.type}
-            </div>
-
-            <span class="remove" on:click={() => remove(component)}>
-              <svg width="12" height="12" viewBox="0 0 24 24">
-                <line stroke="#999" x1="18" y1="6" x2="6" y2="18" />
-                <line stroke="#999" x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </span>
-          {/if}
-        </div>
-      {/each}
-
-      <button class="add-new" on:click={addNew} title="add new component">
-        <svg width="12" height="12" viewBox="0 0 24 24">
-          <line stroke="#999" x1="12" y1="5" x2="12" y2="19" />
-          <line stroke="#999" x1="5" y1="12" x2="19" y2="12" />
-        </svg>
-      </button>
-    </div>
-  {/if}
-</div>
