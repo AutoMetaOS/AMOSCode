@@ -31,6 +31,7 @@
 	</section>
 
 	<section slot="b" style="background:#222;color:#fff;">
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div class="panel-header" on:click={toggle}>
 			<h3>{panel}</h3>
 			<slot name="panel-header" />

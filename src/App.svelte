@@ -5,8 +5,7 @@
 
   const code_1 =
     `<script>
-	let count = 0;
-	console.log('This is working!!!')
+//
 <\/script>
 
 <styl` +
@@ -16,13 +15,7 @@
     background-color: #222;
     color: #fff;
   }
-	button{
-		color: white;
-		background-color: black;
-		border: 3px solid gray;
-		font-size: 1.2em;
-		margin: 1em;
-	}
+  svg{border: 1px solid green;}
 </style>
 
 <button on:click={()=>count--}>-</button>
@@ -38,18 +31,17 @@
           name: "App",
           source: code_1,
         },
-        {
-          type: "svelte",
-          name: "C",
-          source: "Test",
-        },
+        // {
+        //   type: "svelte",
+        //   name: "C",
+        //   source: "Test",
+        // },
       ],
     });
   });
 </script>
 
-<style>
-
-</style>
-
 <Repl bind:this={repl} workersUrl="workers" />
+
+<style>
+</style>

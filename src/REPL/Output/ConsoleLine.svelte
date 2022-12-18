@@ -1,6 +1,6 @@
 <script>
-	import JSONNode from 'svelte-json-tree';
-	import ConsoleTable from './ConsoleTable.svelte';
+	import JSONNode from "svelte-json-tree";
+	import ConsoleTable from "./ConsoleTable.svelte";
 
 	export let log;
 	export let level = 1;
@@ -10,35 +10,48 @@
 	}
 </script>
 
-{#if log.level === 'table'}
+{#if log.level === "table"}
 	<ConsoleTable data={log.args[0]} columns={log.args[1]} />
 {/if}
 
-<div class="log console-{log.level}" style="padding-left: {level * 15}px" on:click={log.level === 'group' ? toggleGroupCollapse : undefined}>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div
+	class="log console-{log.level}"
+	style="padding-left: {level * 15}px"
+	on:click={log.level === "group" ? toggleGroupCollapse : undefined}
+>
 	{#if log.count > 1}
 		<span class="count">{log.count}x</span>
 	{/if}
 
-	{#if log.level === 'trace' || log.level === 'assert'}
-		<div class="arrow" class:expand={!log.collapsed} on:click={toggleGroupCollapse}>▶</div>
+	{#if log.level === "trace" || log.level === "assert"}
+		<div
+			class="arrow"
+			class:expand={!log.collapsed}
+			on:click={toggleGroupCollapse}
+		>
+			▶
+		</div>
 	{/if}
 
-	{#if log.level === 'assert'}
+	{#if log.level === "assert"}
 		<span class="assert">Assertion failed:</span>
 	{/if}
 
-	{#if log.level === 'clear'}
+	{#if log.level === "clear"}
 		<span class="info">Console was cleared</span>
-	{:else if log.level === 'unclonable'}
-		<span class="info error">Message could not be cloned. Open devtools to see it</span>
-	{:else if log.level === 'group'}
+	{:else if log.level === "unclonable"}
+		<span class="info error"
+			>Message could not be cloned. Open devtools to see it</span
+		>
+	{:else if log.level === "group"}
 		<div class="arrow" class:expand={!log.collapsed}>▶</div>
 		<span class="title">{log.label}</span>
-	{:else if log.level.startsWith('system')}
+	{:else if log.level.startsWith("system")}
 		{#each log.args as arg}
 			{arg}
 		{/each}
-	{:else if log.level === 'table'}
+	{:else if log.level === "table"}
 		<JSONNode value={log.args[0]} />
 	{:else}
 		{#each log.args as arg}
@@ -50,16 +63,16 @@
 	{/each}
 </div>
 
-{#if log.level === 'group' && !log.collapsed}
+{#if log.level === "group" && !log.collapsed}
 	{#each log.logs as childLog}
-		<svelte:self log={childLog} level={level + 1}/>
+		<svelte:self log={childLog} level={level + 1} />
 	{/each}
 {/if}
 
-{#if (log.level === 'trace' || log.level === 'assert') && !log.collapsed}
+{#if (log.level === "trace" || log.level === "assert") && !log.collapsed}
 	<div class="trace">
-		{#each log.stack.split('\n').slice(2) as stack}
-			<div>{stack.replace(/^\s*at\s+/, '')}</div>
+		{#each log.stack.split("\n").slice(2) as stack}
+			<div>{stack.replace(/^\s*at\s+/, "")}</div>
 		{/each}
 	</div>
 {/if}
@@ -79,22 +92,26 @@
 		font-family: var(--font-mono);
 	}
 
-	.console-warn, .console-system-warn {
+	.console-warn,
+	.console-system-warn {
 		background: #fffbe6;
 		border-color: #fff4c4;
 	}
 
-	.console-error, .console-assert {
+	.console-error,
+	.console-assert {
 		background: #fff0f0;
 		border-color: #fed6d7;
 	}
 
-	.console-group, .arrow {
+	.console-group,
+	.arrow {
 		cursor: pointer;
 		user-select: none;
 	}
 
-	.console-trace, .console-assert {
+	.console-trace,
+	.console-assert {
 		border-bottom: none;
 	}
 

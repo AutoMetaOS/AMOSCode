@@ -38,8 +38,6 @@
     // re-select, in case the type changed
     handle_select($selected);
 
-    components = components; // TODO necessary?
-
     // focus the editor, but wait a beat (so key events aren't misdirected)
     setTimeout(request_focus);
 
@@ -146,6 +144,7 @@
   {#if $components.length}
     <div class="file-tabs" on:dblclick={addNew}>
       {#each $components as component, index}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
           id={component.name}
           class="button"
@@ -183,6 +182,7 @@
               class:duplicate={isComponentNameUsed(editing)}
             />
           {:else}
+            <!-- svelte-ignore a11y-autofocus -->
             <div
               class="editable"
               title="edit component name"
@@ -191,6 +191,7 @@
               {component.name}.{component.type}
             </div>
 
+            <!-- svelte-ignore a11y-autofocus -->
             <span class="remove" on:click={() => remove(component)}>
               <svg width="12" height="12" viewBox="0 0 24 24">
                 <line stroke="#999" x1="18" y1="6" x2="6" y2="18" />
