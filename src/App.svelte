@@ -6,14 +6,14 @@
   const code_1 =
     `<script>
   // import Markdown from "./markdown.svelte";
-  import {uuid} from "predefined";
-  import {a} from "./funcs.js";
+  import { uuid } from "predefined";
+  import { a } from "./funcs.js";
 <\/script>
-{uuid()}
+{ uuid() }
 <styl` +
     `e>` +
     `
-  :global(body) {background-color: #222;color: #fff;}
+  :global(body) { background-color: #222;color: #fff; }
 </style>
 
 <!-- <Markdown>

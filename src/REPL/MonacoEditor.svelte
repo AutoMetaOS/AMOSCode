@@ -45,10 +45,10 @@
   onMount(() => {
     editor = monaco.editor.create(editorDOM, {
       model: null,
-      tabSize: 2,
+      tabSize: 4,
       scrollBeyondLastLine: false,
       fontLigatures: true,
-      fontFamily: "Fira Code,",
+      fontFamily: "Fira Code",
       fontSize: 16,
       theme: "vs-dark",
       wordWrapColumn: mode ? 40 : 80,
