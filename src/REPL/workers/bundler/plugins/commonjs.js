@@ -9,46 +9,37 @@ const require = `function require(id) {
 export default {
 	name: 'commonjs',
 
-	transform: (code, id) => {
-		if (!/\b(require|module|exports)\b/.test(code)) return;
+	transform: ( code, id ) => {
+		if ( !/\b(require|module|exports)\b/.test( code ) ) return;
 
 		try {
-			const ast = acorn.parse(code, {
-				ecmaVersion: 9
-			});
+			const ast = acorn.parse( code, { ecmaVersion: 9 } );
 
 			const requires = [];
 
-			walk(ast, {
+			walk( ast, {
 				enter: node => {
-					if (node.type === 'CallExpression' && node.callee.name === 'require') {
-						if (node.arguments.length !== 1) return;
-						const arg = node.arguments[0];
-						if (arg.type !== 'Literal' || typeof arg.value !== 'string') return;
+					if ( node.type === 'CallExpression' && node.callee.name === 'require' ) {
+						if ( node.arguments.length !== 1 ) return;
+						const arg = node.arguments[ 0 ];
+						if ( arg.type !== 'Literal' || typeof arg.value !== 'string' ) return;
 
-						requires.push(arg.value);
+						requires.push( arg.value );
 					}
 				}
-			});
+			} );
 
-			const imports = requires.map((id, i) => `import __repl_${i} from '${id}';`).join('\n');
-			const lookup = `const __repl_lookup = { ${requires.map((id, i) => `'${id}': __repl_${i}`).join(', ')} };`;
+			const imports = requires.map( ( id, i ) => `import __repl_${ i } from '${ id }';` ).join( '\n' );
+			const lookup = `const __repl_lookup = { ${ requires.map( ( id, i ) => `'${ id }': __repl_${ i }` ).join( ', ' ) } };`;
 
 			const transformed = [
-				imports,
-				lookup,
-				require,
+				imports, lookup, require,
 				`const exports = {}; const module = { exports };`,
 				code,
 				`export default module.exports;`
-			].join('\n\n');
+			].join( '\n\n' );
 
-			return {
-				code: transformed,
-				map: null
-			};
-		} catch (err) {
-			return null;
-		}
+			return { code: transformed, map: null };
+		} catch ( err ) { return null; }
 	}
 };
