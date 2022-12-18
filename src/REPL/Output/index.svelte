@@ -109,28 +109,26 @@
 <style>
   .view-toggle {
     height: var(--pane-controls-h);
-    border-bottom: 1px solid #eee;
+    background: #222;
+    border-bottom: 1px solid #fff2;
     white-space: nowrap;
     box-sizing: border-box;
   }
 
   button {
-    /* width: 50%;
-		height: 100%; */
-    background: white;
     text-align: left;
     position: relative;
     font: 400 12px/1.5 var(--font);
     border: none;
     border-bottom: 3px solid transparent;
     padding: 12px 12px 8px 12px;
-    color: #999;
+    color: #ccc;
     border-radius: 0;
   }
 
   button.active {
     border-bottom: 3px solid var(--prime);
-    color: #333;
+    color: #fff;
   }
 
   .tab-content {

@@ -79,7 +79,7 @@
 
 <style>
 	.log {
-		border-bottom: 1px solid #eee;
+		border-bottom: 1px solid #fff2;
 		padding: 5px 10px 0px;
 		display: flex;
 		position: relative;
@@ -121,7 +121,7 @@
 	}
 
 	.trace {
-		border-bottom: 1px solid #eee;
+		border-bottom: 1px solid #fff2;
 		font-size: 12px;
 		font-family: var(--font-mono);
 		padding: 4px 0 2px;

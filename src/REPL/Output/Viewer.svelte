@@ -190,7 +190,7 @@
 </script>
 
 <div class="iframe-container">
-  <PaneWithPanel pos={100} panel="Console">
+  <PaneWithPanel pos={85} panel="Console">
     <div slot="main">
       <iframe
         title="Result"

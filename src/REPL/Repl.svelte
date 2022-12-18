@@ -210,6 +210,39 @@
   }
 </script>
 
+<div class="container" class:orientation>
+  <SplitPane
+    type={orientation === "rows" ? "vertical" : "horizontal"}
+    pos={fixed ? fixedPos : orientation === "rows" ? 60 : 50}
+    {fixed}
+  >
+    <section slot="a">
+      <ComponentSelector {handle_select} />
+      <ModuleEditor
+        bind:this={input}
+        on:ready={register_module_editor}
+        on:didContentChange={handleContentChange}
+        bundle={$bundle}
+        selected={$selected}
+      />
+    </section>
+
+    <section slot="b" style="height: 100%;">
+      <Output
+        bind:this={output}
+        on:ready={() => (output_ready = true)}
+        {svelteUrl}
+        {workersUrl}
+        {status}
+        {embedded}
+        {relaxed}
+        {injectedJS}
+        {injectedCSS}
+      />
+    </section>
+  </SplitPane>
+</div>
+
 <style>
   .container {
     position: relative;
@@ -238,33 +271,3 @@
     height: 100%;
   }
 </style>
-
-<div class="container" class:orientation>
-  <SplitPane
-    type={orientation === 'rows' ? 'vertical' : 'horizontal'}
-    pos={fixed ? fixedPos : orientation === 'rows' ? 50 : 60}
-    {fixed}>
-    <section slot="a">
-      <ComponentSelector {handle_select} />
-      <ModuleEditor
-        bind:this={input}
-        on:ready={register_module_editor}
-        on:didContentChange={handleContentChange}
-        bundle={$bundle}
-        selected={$selected} />
-    </section>
-
-    <section slot="b" style="height: 100%;">
-      <Output
-        bind:this={output}
-        on:ready={() => (output_ready = true)}
-        {svelteUrl}
-        {workersUrl}
-        {status}
-        {embedded}
-        {relaxed}
-        {injectedJS}
-        {injectedCSS} />
-    </section>
-  </SplitPane>
-</div>

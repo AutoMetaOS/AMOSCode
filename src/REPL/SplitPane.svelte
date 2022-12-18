@@ -180,7 +180,7 @@
     left: 0;
     top: 0;
     width: 1px;
-    background-color: #eee;
+    background-color: #fff4;
     height: 100%;
   }
 
@@ -196,7 +196,7 @@
     left: 0;
     width: 100%;
     height: 1px;
-    background-color: #eee;
+    background-color: #fff4;
   }
 
   .left,

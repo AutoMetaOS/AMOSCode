@@ -215,7 +215,7 @@
 <style>
   .component-selector {
     position: relative;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #000;
     overflow: hidden;
   }
 

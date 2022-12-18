@@ -5,22 +5,42 @@
 
   const code_1 =
     `<script>
-//
+  // import Markdown from "./markdown.svelte";
+  import {uuid} from "predefined";
+  import {a} from "./funcs.js";
 <\/script>
-
+{uuid()}
 <styl` +
     `e>` +
     `
-  :global(body) {
-    background-color: #222;
-    color: #fff;
-  }
-  svg{border: 1px solid green;}
+  :global(body) {background-color: #222;color: #fff;}
 </style>
 
-<button on:click={()=>count--}>-</button>
-{count}
-<button on:click={()=>count++}>+</button>
+<!-- <Markdown>
+  # Hello
+  > there
+</Markdown> -->
+
+<br/> {a}
+
+`;
+  const md = `<script>
+	import {marked} from "marked";
+	let text;
+	$: md = "";
+
+	setInterval(()=>{
+		md = marked.parse(text.innerHTML.replaceAll('&gt;','>'));
+	},1000)
+<\/script>
+
+<div bind:this={text} style="display:none;">
+	<slot/>
+</div>
+
+<div>
+	{@html md}
+</div>
 `;
 
   onMount(() => {
@@ -31,11 +51,16 @@
           name: "App",
           source: code_1,
         },
-        // {
-        //   type: "svelte",
-        //   name: "C",
-        //   source: "Test",
-        // },
+        {
+          type: "js",
+          name: "funcs",
+          source: `export const a = 1;`,
+        },
+        {
+          type: "svelte",
+          name: "markdown",
+          source: md,
+        },
       ],
     });
   });
