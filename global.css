@@ -75,7 +75,7 @@ body {
   --font-mono: "Fira Mono", monospace;
   --font-ui: var(--font-mono);
   --font-title: "Overpass", sans-serif;
-  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI",
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
@@ -98,16 +98,6 @@ body {
   font-display: fallback;
   src: local("Overpass Bold "), local("Overpass-Bold"),
     url("fonts/overpass/overpass-latin-600.woff2") format("woff2");
-}
-
-/* fira-mono-400normal - latin */
-@font-face {
-  font-family: "Fira Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: fallback;
-  src: local("Fira Mono Regular "), local("Fira Mono-Regular"),
-    url("fonts/fira-mono/fira-mono-latin-400.woff2") format("woff2");
 }
 
 /*	base reset ----------------------------- */
