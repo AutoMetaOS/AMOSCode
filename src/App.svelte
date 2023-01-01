@@ -1,18 +1,17 @@
 <script>
   import Repl from "./REPL/Repl.svelte";
   import { onMount } from "svelte";
+  import md from "./templates/md";
+  import accumulator from "./templates";
+
   let repl;
 
-  const accumulator = `
-  export { onMount } from "svelte";
-  export {default as Markdown} from "./Markdown.svelte";
-  `;
-  const index =
+  const imports = `import {\n Markdown,\n onMount, log, warn
+} from "./index.js";\n\nonMount(()=>{});`;
+
+  const index = (max) =>
     `<script>
-  import {
-  //  Markdown,
-   Solid
- } from "./index.js";
+${max ? imports : ""}
 <\/script>
 
 <style` +
@@ -20,72 +19,63 @@
   :global(body) { background-color: #222;color: #fff; }
 </style>
 
+${
+  max
+    ? `<Markdown>
+# Hello
+> there
+\`\`\`mermaid
+graph LR
+    A --- B
+    B-->C[fa:fa-ban forbidden]
+    B-->D(fa:fa-spinner);
+\`\`\`
+</Markdown>`
+    : ""
+}`;
 
-<!-- <Markdown>
-  # Hello
-  > there
-</Markdown> -->
-`;
-  const md = `<script>
-	import { marked } from "marked";
-	let text;
-	$: md = "";
-
-	setInterval(()=>{
-		md = marked.parse(text.innerHTML.replaceAll('&gt;','>'))
-	}, 1e3)
-<\/script>
-
-<template bind:this={text}><slot/></template>
-<div>{@html md}</div>
-`;
-  const solid = `function App() {
-  return (
-    <div class="">
-      <header class="">
-        <p>Edit <code>src/App.jsx</code> and save to reload.</p>
-        <a
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >Learn Solid</a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
-`;
+  let isMinimal = false;
+  const nonMins = [
+    {
+      type: "svelte",
+      name: "Markdown",
+      source: md,
+    },
+    {
+      type: "js",
+      name: "index",
+      source: accumulator,
+    },
+  ];
 
   onMount(() => {
-    repl.initialize({
-      components: [
-        {
-          type: "svelte",
-          name: "App",
-          source: index.trim(),
-        },
-        {
-          type: "svelte",
-          name: "Markdown",
-          source: md.trim(),
-        },
-        {
-          type: "jsx",
-          name: "Solid",
-          source: solid.trim(),
-        },
-        {
-          type: "js",
-          name: "index",
-          source: accumulator.trim(),
-        },
-      ],
-    });
+    isMinimal = new URL(window.location).searchParams.has("minimal");
+    const components = [
+      {
+        type: "svelte",
+        name: "App",
+        source: index(!isMinimal),
+      },
+    ];
+    if (!isMinimal) nonMins.forEach((e) => components.push(e));
+
+    repl.initialize({ components });
   });
+
+  const toggleMinimal = () =>
+    (window.location.href = !isMinimal
+      ? window.location.href + "?minimal"
+      : window.location.href.replace("?minimal", ""));
 </script>
 
 <Repl bind:this={repl} workersUrl="workers" />
-
-<style>
-</style>
+<div
+  class="config"
+  style="position:fixed;bottom:5px;left:50%;transform:translate(-50%,0);width:200px;padding:10px;z-index:999999;display:flex;justify-content:space-around;color:#fff;background:#222;font-family:Helvetica;font-size:16px;box-shadow:0 2px 5px 2px #0004;"
+>
+  <span />
+  <button on:click={toggleMinimal}>
+    {isMinimal ? "Minimal" : "Maximal"} Mode
+  </button>
+  <span />
+</div>
