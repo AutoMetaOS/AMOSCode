@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "public/*.js": true,
-        "public/bundle.*": true
+        "public/bundle.*": true,
+        "public/*.LICENSE.txt": true
     },
 }

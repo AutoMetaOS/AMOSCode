@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  cross-env: 7.0.3
+  '@jridgewell/sourcemap-codec': ^1.4.14
   css-loader: 6.7.3
   estree-walker: 3.0.1
   file-loader: 6.2.0
@@ -10,8 +10,6 @@ specifiers:
   monaco-editor: 0.34.1
   monaco-editor-webpack-plugin: 7.0.1
   predefined: ^2.1.1
-  sourcemap-codec: 1.4.6
-  style-loader: 3.3.1
   svelte: 3.54.0
   svelte-json-tree: 1.0.0
   svelte-loader: 3.1.4
@@ -21,20 +19,18 @@ specifiers:
   yootils: 0.3.1
 
 dependencies:
+  '@jridgewell/sourcemap-codec': 1.4.14
   estree-walker: 3.0.1
   monaco-editor: 0.34.1
   predefined: 2.1.1
-  sourcemap-codec: 1.4.6
   yootils: 0.3.1
 
 devDependencies:
-  cross-env: 7.0.3
   css-loader: 6.7.3_webpack@5.75.0
   file-loader: 6.2.0_webpack@5.75.0
   marked: 4.2.4
   mini-css-extract-plugin: 2.7.2_webpack@5.75.0
   monaco-editor-webpack-plugin: 7.0.1_feckyf2jam7vk36gev3ykueqty
-  style-loader: 3.3.1_webpack@5.75.0
   svelte: 3.54.0
   svelte-json-tree: 1.0.0
   svelte-loader: 3.1.4_svelte@3.54.0
@@ -77,7 +73,6 @@ packages:
 
   /@jridgewell/sourcemap-codec/1.4.14:
     resolution: {integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==}
-    dev: true
 
   /@jridgewell/trace-mapping/0.3.17:
     resolution: {integrity: sha512-MCNzAp77qzKca9+W/+I0+sEpaUnZoeasnghNeVc41VZCEKaCH73Vq3BZZ/SzWIgrqE4H4ceI+p+b6C0mHf9T4g==}
@@ -632,14 +627,6 @@ packages:
 
   /core-util-is/1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
-    dev: true
-
-  /cross-env/7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
-    hasBin: true
-    dependencies:
-      cross-spawn: 7.0.3
     dev: true
 
   /cross-spawn/7.0.3:
@@ -1928,11 +1915,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /sourcemap-codec/1.4.6:
-    resolution: {integrity: sha512-1ZooVLYFxC448piVLBbtOxFcXwnymH9oUF8nRd3CuYDVvkRBxRl6pB4Mtas5a4drtL+E8LDgFkQNcgIw6tc8Hg==}
-    deprecated: Please use @jridgewell/sourcemap-codec instead
-    dev: false
-
   /spdy-transport/3.0.0:
     resolution: {integrity: sha512-hsLVFE5SjA6TCisWeJXFKniGGOpBgMLmerfO2aCyCU5s7nJ/rpAepqmFifv/GCbSbueEeAJJnmSQ2rKC/g8Fcw==}
     dependencies:
@@ -1984,15 +1966,6 @@ packages:
   /strip-final-newline/2.0.0:
     resolution: {integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==}
     engines: {node: '>=6'}
-    dev: true
-
-  /style-loader/3.3.1_webpack@5.75.0:
-    resolution: {integrity: sha512-GPcQ+LDJbrcxHORTRes6Jy2sfvK2kS6hpSfI/fXhPt+spVzxF6LJ1dHLN9zIGmVaaP044YKaIatFaufENRiDoQ==}
-    engines: {node: '>= 12.13.0'}
-    peerDependencies:
-      webpack: ^5.0.0
-    dependencies:
-      webpack: 5.75.0_webpack-cli@4.10.0
     dev: true
 
   /supports-color/8.1.1:

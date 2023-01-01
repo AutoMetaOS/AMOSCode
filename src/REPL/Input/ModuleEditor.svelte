@@ -2,7 +2,6 @@
   import { createEventDispatcher, onMount } from "svelte";
   import MonacoEditor from "../MonacoEditor.svelte";
   import Message from "../Message.svelte";
-  import { std } from "predefined";
 
   export let bundle;
   export let selected;
@@ -11,20 +10,26 @@
 
   onMount(() => dispatch("ready"));
 
-  const handleEditorChange = (event) =>
-    std.debounce(
-      dispatch("didContentChange", {
-        value: event.detail.value,
-      }),
-      2e3
-    );
+  function debounce(fn, wait = 1000) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn.call(this, ...args), wait);
+    };
+  }
+
+  const handleEditorChange = ({ detail: { value } }) =>
+    dispatch("didContentChange", { value });
 
   export const register_editor = () => editor;
 </script>
 
 <div class="editor-wrapper">
-  <div class="editor notranslate" translate="no">
-    <MonacoEditor bind:this={editor} on:didContentChange={handleEditorChange} />
+  <div class="editor" translate="no">
+    <MonacoEditor
+      bind:this={editor}
+      on:didContentChange={debounce(handleEditorChange, 1000)}
+    />
   </div>
 
   <div class="info">

@@ -192,7 +192,12 @@ async function get_bundle ( uid, mode, cache, lookup ) {
 	try {
 		bundle = await rollup.rollup( {
 			input: './App.svelte',
-			plugins: [ repl_plugin, commonjs, json, glsl ],
+			plugins: [
+				repl_plugin,
+				commonjs,
+				json,
+				glsl
+			],
 			inlineDynamicImports: true,
 			onwarn ( { message } ) { all_warnings.push( { message } ); }
 		} );
@@ -205,13 +210,12 @@ async function get_bundle ( uid, mode, cache, lookup ) {
 
 async function bundle ( { uid, components } ) {
 	console.clear();
-	console.log( `running Svelte compiler version %c${ svelte.VERSION }`, 'font-weight: bold' );
+	console.log( `Svelte Compiler v${ svelte.VERSION }` );
 
 	const lookup = {};
-	components.forEach( component => {
-		const path = `./${ component.name }.${ component.type }`;
-		lookup[ path ] = component;
-	} );
+	components.forEach( ( component ) =>
+		lookup[ `./${ component.name }.${ component.type }` ] = component
+	);
 
 	let dom;
 	let error;
@@ -234,8 +238,7 @@ async function bundle ( { uid, components } ) {
 
 		if ( ssr ) {
 			cached.ssr = ssr.cache;
-			if ( ssr.error )
-				throw ssr.error;
+			if ( ssr.error ) throw ssr.error;
 		}
 
 		const ssr_result = ssr
