@@ -7,7 +7,6 @@
   let editor;
 
   export let readonly = false;
-  export let mode;
 
   export function createNewModel(text, type) {
     let model = monaco.editor.createModel(text, type);
@@ -51,10 +50,10 @@
       fontFamily: "Fira Code",
       fontSize: 16,
       theme: "vs-dark",
-      wordWrapColumn: mode ? 40 : 80,
+      wordWrapColumn: 60,
       wordWrapMinified: true,
       wrappingIndent: "indent",
-      scrollBeyondLastLine: mode ? false : true,
+      scrollBeyondLastLine: false,
       readOnly: readonly,
       wordWrap: "on",
       automaticLayout: true,

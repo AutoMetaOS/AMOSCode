@@ -2,6 +2,7 @@
   import { createEventDispatcher, onMount } from "svelte";
   import MonacoEditor from "../MonacoEditor.svelte";
   import Message from "../Message.svelte";
+  import { std } from "predefined";
 
   export let bundle;
   export let selected;
@@ -10,16 +11,42 @@
 
   onMount(() => dispatch("ready"));
 
-  function handleEditorChange(event) {
-    dispatch("didContentChange", {
-      value: event.detail.value,
-    });
-  }
+  const handleEditorChange = (event) =>
+    std.debounce(
+      dispatch("didContentChange", {
+        value: event.detail.value,
+      }),
+      2e3
+    );
 
-  export function register_editor() {
-    return editor;
-  }
+  export const register_editor = () => editor;
 </script>
+
+<div class="editor-wrapper">
+  <div class="editor notranslate" translate="no">
+    <MonacoEditor bind:this={editor} on:didContentChange={handleEditorChange} />
+  </div>
+
+  <div class="info">
+    {#if bundle}
+      {#if bundle.error}
+        <Message
+          kind="error"
+          details={bundle.error}
+          filename="{selected.name}.{selected.type}"
+        />
+      {:else if bundle.warnings.length > 0}
+        {#each bundle.warnings as warning}
+          <Message
+            kind="warning"
+            details={warning}
+            filename="{selected.name}.{selected.type}"
+          />
+        {/each}
+      {/if}
+    {/if}
+  </div>
+</div>
 
 <style>
   .editor-wrapper {
@@ -47,27 +74,3 @@
     /* height: 100%; */
   }
 </style>
-
-<div class="editor-wrapper">
-  <div class="editor notranslate" translate="no">
-    <MonacoEditor bind:this={editor} on:didContentChange={handleEditorChange} />
-  </div>
-
-  <div class="info">
-    {#if bundle}
-      {#if bundle.error}
-        <Message
-          kind="error"
-          details={bundle.error}
-          filename="{selected.name}.{selected.type}" />
-      {:else if bundle.warnings.length > 0}
-        {#each bundle.warnings as warning}
-          <Message
-            kind="warning"
-            details={warning}
-            filename="{selected.name}.{selected.type}" />
-        {/each}
-      {/if}
-    {/if}
-  </div>
-</div>

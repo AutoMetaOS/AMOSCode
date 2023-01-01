@@ -23,6 +23,7 @@
   "dependencies": {
     "estree-walker": "3.0.1",
     "monaco-editor": "0.34.1",
+    "predefined": "^2.1.1",
     "sourcemap-codec": "1.4.6",
     "yootils": "0.3.1"
   }

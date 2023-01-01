@@ -3,40 +3,66 @@
   import { onMount } from "svelte";
   let repl;
 
-  const code_1 =
+  const accumulator = `
+  export {default as Solid} from "./Solid.svelte";
+  export {default as Markdown} from "./Markdown.svelte";
+  `;
+  const index =
     `<script>
-  // import Markdown from "./markdown.svelte";
-  import { uuid } from "predefined";
-  import { a } from "./funcs.js";
+  //  import {
+  //  Markdown,
+    // Solid
+  // } from "./index.js";
 <\/script>
-{ uuid() }
+
 <styl` +
     `e>` +
     `
   :global(body) { background-color: #222;color: #fff; }
 </style>
 
-<!-- <Markdown>
+
+<!-- <Solid>
+  render(
+    <div>
+      HI THERE!!!
+    </div>,
+  )
+</Solid>
+
+<Markdown>
   # Hello
   > there
 </Markdown> -->
-
-<br/> {a}
-
 `;
   const md = `<script>
-	import {marked} from "marked";
+	import { marked } from "marked";
 	let text;
 	$: md = "";
 
-	setInterval(()=>{
-		md = marked.parse(text.innerHTML.replaceAll('&gt;','>'));
-	},1000)
+	setInterval(()=>
+		md = marked.parse(text.innerHTML.replaceAll('&gt;','>'))
+	, 1e3)
 <\/script>
 
-<div bind:this={text} style="display:none;">
-	<slot/>
+<template bind:this={text}><slot/></template>
+
+<div>
+	{@html md}
 </div>
+`;
+  const solid = `<script>
+  import { renderToString } from "solid-js/web";
+
+	let text;
+	$: md = "";
+
+	setInterval(()=>
+		md = renderToString(text.innerHTML.replaceAll('&gt;','>'))
+	, 1e3)
+<\/script>
+
+<template bind:this={text}><slot/></template>
 
 <div>
 	{@html md}
@@ -49,17 +75,22 @@
         {
           type: "svelte",
           name: "App",
-          source: code_1,
-        },
-        {
-          type: "js",
-          name: "funcs",
-          source: `export const a = 1;`,
+          source: index,
         },
         {
           type: "svelte",
-          name: "markdown",
+          name: "Markdown",
           source: md,
+        },
+        {
+          type: "svelte",
+          name: "Solid",
+          source: solid,
+        },
+        {
+          type: "js",
+          name: "index",
+          source: accumulator,
         },
       ],
     });

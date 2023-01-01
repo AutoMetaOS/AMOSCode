@@ -1,0 +1,6 @@
+{
+    "files.exclude": {
+        "public/*.js": true,
+        "public/bundle.*": true
+    },
+}

@@ -9,6 +9,7 @@ specifiers:
   mini-css-extract-plugin: 2.7.2
   monaco-editor: 0.34.1
   monaco-editor-webpack-plugin: 7.0.1
+  predefined: ^2.1.1
   sourcemap-codec: 1.4.6
   style-loader: 3.3.1
   svelte: 3.54.0
@@ -22,6 +23,7 @@ specifiers:
 dependencies:
   estree-walker: 3.0.1
   monaco-editor: 0.34.1
+  predefined: 2.1.1
   sourcemap-codec: 1.4.6
   yootils: 0.3.1
 
@@ -1631,6 +1633,10 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: true
+
+  /predefined/2.1.1:
+    resolution: {integrity: sha512-Qggsx1CKg5H9z6wbItcWk1pxj8OWQe1twBtrDg/sSfixR38rYu6B0zURfcc08/i+o2I9LmILGuOJ13TaA5W78w==}
+    dev: false
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}

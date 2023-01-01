@@ -4,6 +4,7 @@
   import Viewer from "./Viewer.svelte";
   import Compiler from "./Compiler.js";
   import { is_browser } from "../env.js";
+  import { uuid } from "predefined";
 
   const dispatch = createEventDispatcher();
 
@@ -16,6 +17,9 @@
   export let relaxed = false;
   export let injectedJS;
   export let injectedCSS;
+
+  const genid = () => `${uuid().split("-")[0]}-${(+new Date()).toString(36)}`;
+  $: render_id = genid();
 
   export async function set(selected, options) {
     selected_type = selected.type;
@@ -47,12 +51,10 @@
   }
 
   export async function update(selected, options) {
+    render_id = genid();
     if (selected.type === "js" || selected.type === "json") return;
 
-    if (selected.type === "md") {
-      markdown = marked(selected.source);
-      return;
-    }
+    if (selected.type === "md") return (markdown = marked(selected.source));
 
     const compiled = await compiler.compile(selected, options);
     if (!js_editor) return; // unmounted
@@ -64,12 +66,10 @@
   const compiler = is_browser && new Compiler(workersUrl, svelteUrl);
 
   // refs
-  let viewer;
   let js_editor;
   let css_editor;
   let jsModel;
   let cssModel;
-  const setters = {};
 
   let view = "result";
   let selected_type = "";
@@ -81,18 +81,16 @@
     <button class="active">Markdown</button>
   {:else}
     <button class:active={view === "result"} on:click={() => (view = "result")}>
-      Result
+      Result: {render_id}
     </button>
   {/if}
 </div>
 
-<!-- component viewer -->
 <div
   class="tab-content"
   class:visible={selected_type !== "md" && view === "result"}
 >
   <Viewer
-    bind:this={viewer}
     bind:error={runtimeError}
     {status}
     {relaxed}
