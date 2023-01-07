@@ -29,16 +29,12 @@
   // this gets called by the parent component on initialization, typically using onMount
 
   export function initialize(data) {
-    if (output_ready && module_editor_ready) {
-      set(data);
-    } else {
-      setTimeout(initialize.bind(null, data), 0);
-    }
+    if (output_ready && module_editor_ready) set(data);
+    else setTimeout(initialize.bind(null, data), 0);
   }
 
-  function set(data) {
-    //this creates a model and adds it to the component object for the initial components
-    data.components.forEach((component) => {
+  function set({ components }) {
+    components.forEach((component) => {
       component.model = module_editor.createNewModel(
         component.source,
         component.type === "svelte" ? "html" : component.type
@@ -128,7 +124,6 @@
       // so that updating components works... might be better
       // if a) components had unique IDs, b) we tracked selected
       // *index* rather than component, and c) `selected` was
-      // derived from `components` and `index`
       component.source = event.detail.value;
       return component;
     });
@@ -140,9 +135,7 @@
 
     rebundle();
 
-    dispatch("change", {
-      components: $components,
-    });
+    dispatch("change", { components: $components });
   }
 
   setContext("REPL", {
@@ -186,10 +179,6 @@
     module_editor.setNewModel(component.model);
     selected.set(component);
     output.set($selected, $compile_options);
-  }
-
-  function get_component_name(component) {
-    return `${component.name}.${component.type}`;
   }
 
   let status = null;
