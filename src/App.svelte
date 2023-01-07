@@ -49,28 +49,23 @@ graph LR
   ];
 
   onMount(() => {
-    // frame.contentWindow.postMessage({call:'code', value: /*value*/},
-    window.addEventListener(
-      "message",
-      function (event) {
-        console.log(event.origin);
-        if (typeof event.data == "object" && event.data.call == "code") {
-          console.log(value);
-        }
-      },
-      false
-    );
+    const params = new URL(window.location).searchParams;
+    isMinimal = params.has("minimal");
 
-    isMinimal = new URL(window.location).searchParams.has("minimal");
+    let code = "";
+    if (!isMinimal && window.location !== window.parent.location) return 0;
+    if (window.location !== window.parent.location)
+      code = atob(params.get("data"));
+    else code = index(!isMinimal);
+
     const components = [
       {
         type: "svelte",
         name: "App",
-        source: index(!isMinimal),
+        source: code,
       },
     ];
     if (!isMinimal) nonMins.forEach((e) => components.push(e));
-
     repl.initialize({ components });
   });
 
