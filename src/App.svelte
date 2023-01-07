@@ -55,7 +55,7 @@ graph LR
     let code = "";
     if (!isMinimal && window.location !== window.parent.location) return 0;
     if (window.location !== window.parent.location)
-      code = atob(params.get("data"));
+      code = decodeURIComponent(atob(params.get("data")));
     else code = index(!isMinimal);
 
     const components = [
