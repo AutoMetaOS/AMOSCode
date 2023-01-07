@@ -40,12 +40,8 @@
 
   onMount(() => {
     proxy = new ReplProxy(iframe, {
-      on_fetch_progress: (progress) => {
-        pending_imports = progress;
-      },
-      on_error: (event) => {
-        push_logs({ level: "error", args: [event.value] });
-      },
+      on_fetch_progress: (progress) => (pending_imports = progress),
+      on_error: (event) => push_logs({ level: "error", args: [event.value] }),
       on_unhandled_rejection: (event) => {
         let error = event.value;
         if (typeof error === "string") error = { message: error };
@@ -56,21 +52,12 @@
         if (log.level === "clear") {
           clear_logs();
           push_logs(log);
-        } else if (log.duplicate) {
-          increment_duplicate_log();
-        } else {
-          push_logs(log);
-        }
+        } else if (log.duplicate) increment_duplicate_log();
+        else push_logs(log);
       },
-      on_console_group: (action) => {
-        group_logs(action.label, false);
-      },
-      on_console_group_end: () => {
-        ungroup_logs();
-      },
-      on_console_group_collapsed: (action) => {
-        group_logs(action.label, true);
-      },
+      on_console_group: (action) => group_logs(action.label, false),
+      on_console_group_end: () => ungroup_logs(),
+      on_console_group_collapsed: (action) => group_logs(action.label, true),
     });
 
     iframe.addEventListener("load", () => {
@@ -78,9 +65,7 @@
       ready = true;
     });
 
-    return () => {
-      proxy.destroy();
-    };
+    return () => proxy.destroy();
   });
 
   async function apply_bundle($bundle) {

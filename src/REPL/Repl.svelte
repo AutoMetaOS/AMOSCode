@@ -33,8 +33,8 @@
     else setTimeout(initialize.bind(null, data), 0);
   }
 
-  function set({ components }) {
-    components.forEach((component) => {
+  function set(data) {
+    data.components.forEach((component) => {
       component.model = module_editor.createNewModel(
         component.source,
         component.type === "svelte" ? "html" : component.type

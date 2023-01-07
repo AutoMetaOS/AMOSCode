@@ -5,6 +5,8 @@
 
   export let bundle;
   export let selected;
+  let dark = false;
+
   let editor;
   const dispatch = createEventDispatcher();
 
@@ -18,10 +20,20 @@
     };
   }
 
-  const handleEditorChange = ({ detail: { value } }) =>
+  const darkset = `:global(body) { background-color: #222;color: #fff; }`;
+  const handleEditorChange = ({ detail: { value } }) => {
+    if (dark) {
+      if (value.includes("</style>"))
+        value = value.replace("</style>", darkset + "</style>");
+      else value += `<style>${darkset}</style>`;
+    }
     dispatch("didContentChange", { value });
+  };
 
   export const register_editor = () => editor;
+  onMount(() => {
+    dark = new URL(window.location.href).searchParams.has("dark");
+  });
 </script>
 
 <div class="editor-wrapper">

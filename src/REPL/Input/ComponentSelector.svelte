@@ -67,9 +67,7 @@
   }
 
   function selectInput(event) {
-    setTimeout(() => {
-      event.target.select();
-    });
+    setTimeout(() => event.target.select());
   }
 
   let uid = 1;
