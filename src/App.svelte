@@ -11,7 +11,7 @@
 
   const index = (max) =>
     `<script>
-${max ? imports : ""}
+${max ? imports : "\timport { onMount } from 'svelte';"}
 <\/script>
 
 <style` +
@@ -31,7 +31,7 @@ graph LR
     B-->D(fa:fa-spinner);
 \`\`\`
 </Markdown>`
-    : ""
+    : "Hi"
 }`;
 
   let isMinimal = false;
@@ -49,6 +49,18 @@ graph LR
   ];
 
   onMount(() => {
+    // frame.contentWindow.postMessage({call:'code', value: /*value*/},
+    window.addEventListener(
+      "message",
+      function (event) {
+        console.log(event.origin);
+        if (typeof event.data == "object" && event.data.call == "code") {
+          console.log(value);
+        }
+      },
+      false
+    );
+
     isMinimal = new URL(window.location).searchParams.has("minimal");
     const components = [
       {
@@ -69,13 +81,11 @@ graph LR
 </script>
 
 <Repl bind:this={repl} workersUrl="workers" />
-<div
-  class="config"
-  style="position:fixed;bottom:5px;left:50%;transform:translate(-50%,0);width:200px;padding:10px;z-index:999999;display:flex;justify-content:space-around;color:#fff;background:#222;font-family:Helvetica;font-size:16px;box-shadow:0 2px 5px 2px #0004;"
->
-  <span />
-  <button on:click={toggleMinimal}>
-    {isMinimal ? "Minimal" : "Maximal"} Mode
-  </button>
-  <span />
-</div>
+{#if !isMinimal}
+  <div
+    class="config"
+    style="position:fixed;bottom:5px;left:50%;transform:translate(-50%,0);width:200px;padding:10px;z-index:999999;color:#fff;background:#222;font:400 16px Helvetica;box-shadow:0 2px 5px 2px #0004;text-align:center;"
+  >
+    <button on:click={toggleMinimal}> Start Minimal Mode </button>
+  </div>
+{/if}
